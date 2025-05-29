@@ -342,82 +342,155 @@ function roulette(num) {
 // CHALLENGE 16
 function average() {
 
+  let numbers = [];
+  function createFunc(num){
+     if(!num && numbers.length == 0) return 0;
+    
+    if(num){
+      numbers.push(num)
+    }
+    
+   let sum = numbers.reduce((a, b)=> a+b,0)
+      let avr = (sum / numbers.length)
+      return avr;
+    
+ 
+  } 
+  return createFunc;
 }
 
 // /*** Uncomment these to check your work! ***/
-// const avgSoFar = average();
-// console.log(avgSoFar()); // => should log 0
-// console.log(avgSoFar(4)); // => should log 4
-// console.log(avgSoFar(8)); // => should log 6
-// console.log(avgSoFar()); // => should log 6
-// console.log(avgSoFar(12)); // => should log 8
-// console.log(avgSoFar()); // => should log 8
+ //const avgSoFar = average();
+ //console.log(avgSoFar()); // => should log 0
+ //console.log(avgSoFar(4)); // => should log 4
+ //console.log(avgSoFar(8)); // => should log 6
+ //console.log(avgSoFar()); // => should log 6
+ //console.log(avgSoFar(12)); // => should log 8
+ //console.log(avgSoFar()); // => should log 8
 
 
 // CHALLENGE 17
 function makeFuncTester(arrOfTests) {
+  function createFunc(callback){
+    let isSame = 0
+    for(let tab of arrOfTests){
+      let val1 = callback(tab[0])
+      let val2 = callback(tab[1])
+      console.log([val1, val2])
+      if(val1 == val2){
+        isSame ++
+      }
+    }
+    if (isSame == arrOfTests.length) return true
+  }
+  return createFunc;
   
 }
 
 // /*** Uncomment these to check your work! ***/
-// const capLastTestCases = [];
-// capLastTestCases.push(['hello', 'hellO']);
-// capLastTestCases.push(['goodbye', 'goodbyE']);
-// capLastTestCases.push(['howdy', 'howdY']);
-// const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
-// const capLastAttempt1 = str => str.toUpperCase();
-// const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
-// console.log(shouldCapitalizeLast(capLastAttempt1)); // => should log false
-// console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
+ //const capLastTestCases = [];
+ //capLastTestCases.push(['hello', 'hellO']);
+ //capLastTestCases.push(['goodbye', 'goodbyE']);
+ //capLastTestCases.push(['howdy', 'howdY']);
+ //const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
+ //const capLastAttempt1 = str => str.toUpperCase();
+ //const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
+ //console.log(shouldCapitalizeLast(capLastAttempt1)); // => should log false (for me it return true !)
+ //console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
 
 
 // CHALLENGE 18
 function makeHistory(limit) {
 
+  let strHistory = [];
+  function createFunc(str){
+    if(strHistory.length > limit)
+      strHistory.shift()
+    if(str == 'undo' ){
+      if(strHistory.length == 0){
+        return 'nothing to undo';
+      }
+      let lastElm = strHistory[strHistory.length -1];
+      strHistory.pop();
+    	return lastElm + ' undone'
+    }
+    strHistory.push(str)
+    return str + ' done'
+  }
+  return createFunc;
 }
 
 // /*** Uncomment these to check your work! ***/
-// const myActions = makeHistory(2);
-// console.log(myActions('jump')); // => should log 'jump done'
-// console.log(myActions('undo')); // => should log 'jump undone'
-// console.log(myActions('walk')); // => should log 'walk done'
-// console.log(myActions('code')); // => should log 'code done'
-// console.log(myActions('pose')); // => should log 'pose done'
-// console.log(myActions('undo')); // => should log 'pose undone'
-// console.log(myActions('undo')); // => should log 'code undone'
-// console.log(myActions('undo')); // => should log 'nothing to undo'
+ //const myActions = makeHistory(2);
+ //console.log(myActions('jump')); // => should log 'jump done'
+ //console.log(myActions('undo')); // => should log 'jump undone'
+ //console.log(myActions('walk')); // => should log 'walk done'
+ //console.log(myActions('code')); // => should log 'code done'
+ //console.log(myActions('pose')); // => should log 'pose done'
+ //console.log(myActions('undo')); // => should log 'pose undone'
+ //console.log(myActions('undo')); // => should log 'code undone'
+ //console.log(myActions('undo')); // => should log 'nothing to undo'
 
 
 // CHALLENGE 19
 function blackjack(array) {
-
+	let firstCall = true;
+  let indicCurrectElmArray = 0
+  let result = null;
+  let isDone = false;
+  
+  function dealer(nbr1, nbr2){
+    function player(){
+    if (isDone){
+      return ' you are done ! '
+    }
+    if(firstCall){
+      result = nbr1 + nbr2
+      firstCall = false
+      return result
+    }
+    
+    result = result + array[indicCurrectElmArray];
+      if (result > 21 ){
+      isDone = true
+      return ' bust '
+    }
+      
+    indicCurrectElmArray ++
+    return result
+    }
+    
+    return player;
+  }
+  return dealer;
 }
 
 // /*** Uncomment these to check your work! ***/
 
 // /*** DEALER ***/
-// const deal = blackjack([2, 6, 1, 7, 11, 4, 6, 3, 9, 8, 9, 3, 10, 4, 5, 3, 7, 4, 9, 6, 10, 11]);
+ const deal = blackjack([2, 6, 1, 7, 11, 4, 6, 3, 9, 8, 9, 3, 10, 4, 5, 3, 7, 4, 9, 6, 10, 11]);
 
 // /*** PLAYER 1 ***/
-// const i_like_to_live_dangerously = deal(4, 5);
-// console.log(i_like_to_live_dangerously()); // => should log 9
-// console.log(i_like_to_live_dangerously()); // => should log 11
-// console.log(i_like_to_live_dangerously()); // => should log 17
-// console.log(i_like_to_live_dangerously()); // => should log 18
-// console.log(i_like_to_live_dangerously()); // => should log 'bust'
-// console.log(i_like_to_live_dangerously()); // => should log 'you are done!'
-// console.log(i_like_to_live_dangerously()); // => should log 'you are done!'
+ const i_like_to_live_dangerously = deal(4, 5);
+console.log(i_like_to_live_dangerously()); // => should log 9
+ console.log(i_like_to_live_dangerously()); // => should log 11
+ console.log(i_like_to_live_dangerously()); // => should log 17
+ console.log(i_like_to_live_dangerously()); // => should log 18
+ console.log(i_like_to_live_dangerously()); // => should log 'bust'
+ console.log(i_like_to_live_dangerously()); // => should log 'you are done!'
+ console.log(i_like_to_live_dangerously()); // => should log 'you are done!'
+
 
 // /*** BELOW LINES ARE FOR THE BONUS ***/
 
 // /*** PLAYER 2 ***/
-// const i_TOO_like_to_live_dangerously = deal(2, 2);
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 4
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 15
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 19
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 'bust'
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
+ const i_TOO_like_to_live_dangerously = deal(2, 2);
+ console.log(i_TOO_like_to_live_dangerously()); // => should log 4
+ console.log(i_TOO_like_to_live_dangerously()); // => should log 15
+ console.log(i_TOO_like_to_live_dangerously()); // => should log 19
+ console.log(i_TOO_like_to_live_dangerously()); // => should log 'bust'
+ console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
+ console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
 
 // /*** PLAYER 3 ***/
 // const i_ALSO_like_to_live_dangerously = deal(3, 7);
@@ -427,3 +500,13 @@ function blackjack(array) {
 // console.log(i_ALSO_like_to_live_dangerously()); // => should log 'you are done!
 // console.log(i_ALSO_like_to_live_dangerously()); // => should log 'you are done!
 
+
+
+// Remarque By Narjiss : 
+/*
+What i have left in these challenges: 
+-Challenge 4
+-Challenge 13
+-Chanllenge 17 (i should have finished it correctly, but the execution doesn't match the requirements!)
+-Challenge 19 (i still have the Bonus part)
+*/
