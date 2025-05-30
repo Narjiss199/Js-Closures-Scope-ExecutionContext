@@ -502,7 +502,7 @@ console.log(i_like_to_live_dangerously()); // => should log 9
 
 
 
-// Remarque By Narjiss : 
+// Note By Narjiss : 
 /*
 What i have left in these challenges: 
 -Challenge 4
